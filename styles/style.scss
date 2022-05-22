@@ -1,0 +1,27 @@
+// Variables
+@import './1-variables/_colors.scss';
+@import './1-variables/_layout.scss';
+@import './1-variables/_text.scss';
+@import './1-variables/_ui.scss';
+
+// Utilities
+@import './2-generic/_modern-normalize.scss';
+@import './2-generic/_load-fonts.scss';
+@import './2-generic/_utilities.scss';
+
+// Globals
+@import './3-global/_themes.scss';
+@import './3-global/_base.scss'; // html, body, scrollbars, etc.
+@import './3-global/_typography.scss';
+
+// Small elements - buttons, inputs, etc.
+@import './4-elements/elements.scss';
+
+// Reusable blocks - cards, dropdowns, modals, etc. 
+
+// For pieces of the layout, header, footer, and so on.
+@import './6-layout/layout.scss'; // section, container, etc
+@import './6-layout/_header.scss';
+
+// Modules - main website functionality. Users, Courses, Posts, etc.
+
