@@ -33,7 +33,7 @@ export default function Provider({ children }) {
       setUser({ ...helpersUser, ...profile })
       setIsLoading(false)
     }
-    // Only run query once user is logged in.
+    // Only fetch profile info once user is logged in.
     if (helpersUser) getUserProfile()
   }, [helpersUser])
 
