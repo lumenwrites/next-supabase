@@ -13,17 +13,17 @@ export default function Home({ lessons }) {
   )
 }
 
-// export async function getServerSideProps() {
-//   const { data: lessons } = await supabase.from('lessons').select('*')
+export async function getServerSideProps() {
+  const { data: lessons } = await supabase.from('lessons').select('*')
 
-//   const slug = 'adding-rooms-and-bridges'
-//   const { data: lesson } = await supabase
-//     .from('lessons')
-//     .select('*')
-//     .eq('slug', slug)
-//     .single()
-//   // console.log('Lesson', lesson)
-//   return {
-//     props: { lessons },
-//   }
-// }
+  const slug = 'adding-rooms-and-bridges'
+  const { data: lesson } = await supabase
+    .from('lessons')
+    .select('*')
+    .eq('slug', slug)
+    .single()
+  // console.log('Lesson', lesson)
+  return {
+    props: { lessons },
+  }
+}

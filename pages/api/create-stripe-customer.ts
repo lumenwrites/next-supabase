@@ -1,4 +1,4 @@
-import { supabase } from 'backend/supabase'
+import { supabase, getServiceSupabase } from 'backend/supabase'
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 // Create a stripe customer as soon as user registers with Supabase.
@@ -13,6 +13,9 @@ const handler = async (req, res) => {
     email: req.body.record.email
   })
   console.log("[create-stripe-customer] Created stripe customer, saving his id into profile table")
+
+  // You have to use service supabase to bypass RLS
+  const supabase = getServiceSupabase()
   // Save stripe customer id into profile table.
   await supabase.from('profile').update({
     stripe_customer: customer.id

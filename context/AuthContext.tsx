@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { createContext, useState, useEffect, useContext } from 'react'
 import { supabase } from 'backend/supabase'
 import { useRouter } from 'next/router'
@@ -6,6 +7,7 @@ const Context = createContext({
   user: {} as any,
   login: () => {},
   logout: () => {},
+  isLoading: true,
 })
 
 export const useAuth = () => useContext(Context)
@@ -13,6 +15,7 @@ export const useAuth = () => useContext(Context)
 export default function Provider({ children }) {
   const router = useRouter()
   const [user, setUser] = useState() // supabase.auth.user()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -30,6 +33,8 @@ export default function Provider({ children }) {
           ...sessionUser,
           ...profile,
         })
+
+        setIsLoading(false)
       }
     }
 
@@ -40,6 +45,15 @@ export default function Provider({ children }) {
       getUserProfile()
     })
   }, [])
+
+  // Every time the user logs in or logs out, store them in the cookie
+  // so that later I can get access to them in the api routes
+  useEffect(() => {
+    axios.post('/api/set-supabase-cookie', {
+      event: user ? 'SIGNED_IN' : 'SIGNED_OUT',
+      session: supabase.auth.session(),
+    })
+  }, [user])
 
   async function login() {
     const { user, session, error } = await supabase.auth.signIn({
@@ -56,7 +70,7 @@ export default function Provider({ children }) {
   }
 
   return (
-    <Context.Provider value={{ user, login, logout }}>
+    <Context.Provider value={{ user, login, logout, isLoading }}>
       {children}
     </Context.Provider>
   )
