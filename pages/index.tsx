@@ -3,8 +3,6 @@ import { supabase } from 'backend/supabase'
 import Login from 'components/Users/Login'
 
 export default function Home({ lessons }) {
-  console.log('Render home')
-  // console.log(lessons)
   return (
     <div>
       <h1>Hello</h1>
